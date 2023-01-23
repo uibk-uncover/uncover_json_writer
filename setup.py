@@ -18,19 +18,19 @@ with codecs.open("README.md", "r", encoding="UTF-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name = 'tool_json_writer',
-    version = __version__,
-    author = u'Martin Beneš',
-    author_email = 'martinbenes1996@gmail.com',
-    description = 'JSON Writer for an Uncover tool.',
-    long_description = long_description,
+    name='tool_json_writer',
+    version=__version__,
+    author=u'Martin Beneš',
+    author_email='martinbenes1996@gmail.com',
+    description='JSON Writer for an Uncover tool.',
+    long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
     license='MIT',
-    url = {
+    url={
         "Source": 'https://github.com/uibk-uncover/tool_json_writer',
     },
-    keywords = ['json', 'format', 'output', 'compatibility'],
+    keywords=['json', 'format', 'output', 'compatibility'],
     install_requires=reqs,
     package_dir={'': '.'},
     classifiers=[
@@ -53,4 +53,3 @@ setuptools.setup(
         'Topic :: Utilities'
     ],
 )
-

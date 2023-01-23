@@ -38,11 +38,12 @@ class Detector:
         """Abstract method for serialization."""
         raise NotImplementedError
 
-    def label_index(self, l: str = None) -> int:
+    def label_index(self, label: str = None) -> int:
         """Gives index of label. If label is not given, takes the internal decision."""
-        decision = self.decision if l is None else l
-        matching = [i for i, v in enumerate(self.labels) if v == decision]
+        label = self.decision if label is None else label
+        matching = [i for i, v in enumerate(self.labels) if v == label]
         return matching[0]
+
 
 @dataclass
 class BinaryDetector(Detector):
@@ -92,7 +93,7 @@ class CategoricalDetector(Detector):
 
     ascending: bool = field(repr=False, default=None)
     """output in ascending or descending score order, by default None (no ordering)"""
-    only_flags:bool = field(repr=False, default=False)
+    only_flags: bool = field(repr=False, default=False)
     """show only labels of 1s, by default show all (False)"""
 
     def __postinit__(self):
@@ -158,6 +159,7 @@ class CategoricalDetector(Detector):
             res['labels'] = [self.labels[i] for i in flagged]
             res['scores'] = [1 for i in flagged]
         return res
+
 
 class ToolJSONWriter:
     """JSON Writer for tool standard output."""
