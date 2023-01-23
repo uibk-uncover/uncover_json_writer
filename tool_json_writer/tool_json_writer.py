@@ -9,7 +9,6 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import json
 from typing import Any, Dict, List, Union
-import string
 
 VERSION = '1.0.0'  # tool version
 
@@ -41,14 +40,9 @@ class Detector:
 
     def label_index(self, l: str = None) -> int:
         """Gives index of label. If label is not given, takes the internal decision."""
-        if l is None:
-            l = self.decision
-        matching = [i for i, v in enumerate(self.labels) if v == l]
-        try:
-            return matching[0]
-        except:
-            raise
-
+        decision = self.decision if l is None else l
+        matching = [i for i, v in enumerate(self.labels) if v == decision]
+        return matching[0]
 
 @dataclass
 class BinaryDetector(Detector):
