@@ -1,5 +1,7 @@
 # Tool JSON Writer
 
+Author: Martin Benes (University of Innsbruck)
+
 This is a Python module for integration of the unified JSON format.
 
 This was proposed as a unified output for all tools from Uncover project.
@@ -19,6 +21,8 @@ Test that the package was correctly installed with
 ```python
 python -c 'import tool_json_writer; print(tool_json_writer.__version__)'
 ```
+
+Follow the demo in order to see the basic functionality.
 
 
 ```python
@@ -48,8 +52,10 @@ wrt.append('third.jpeg', '3valued_detector', {'cover': 0.05, 'stego': 0.8, 'not_
 del wrt
 ```
 
+Proper documentation is vaguely planned. No promises though :)
 
+## Extending the functionality
 
-JSON Writer for an Uncover tool.
+Although I plan to solve bugs affecting the main functionality of the module, if you want to extend the module, you are expected to do it yourself. If you think more people could profit from the extension you wrote, create a pull request.
 
 
