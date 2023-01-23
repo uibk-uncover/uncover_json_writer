@@ -1,0 +1,12 @@
+name: Build from source # workflow name
+description: Workflow for building the library from the source
+
+runs:
+  using: composite
+
+  steps: # tasks
+
+    - name: Build library # build tool_json_writer
+      shell: bash
+      run: |
+        python setup.py bdist

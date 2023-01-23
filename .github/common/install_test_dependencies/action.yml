@@ -1,0 +1,17 @@
+
+name: Test dependencies # workflow name
+description: Workflow for installing test dependencies
+
+# === install test dependencies ===
+runs:
+  using: composite
+
+  steps: # tasks
+
+    - name: Install package dependencies
+      uses: ./.github/common/install_dependencies
+
+    - name: Install test dependencies
+      shell: bash
+      run: |
+        if [ -f tests/requirements.txt ]; then pip3 install -r tests/requirements.txt; fi
