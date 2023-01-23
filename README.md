@@ -1,6 +1,6 @@
 # Tool JSON Writer
 
-Author: Martin Beneš (Universität Innsbruck)
+**Author:** Martin Beneš (Universität Innsbruck)
 
 This is a Python module for adoption of the unified JSON format.
 
