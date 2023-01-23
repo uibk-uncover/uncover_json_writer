@@ -4,7 +4,7 @@
 import codecs
 import os
 import setuptools
-__version__ = os.environ.get('VERSION_NEW', '0.9.0')
+__version__ = os.environ.get('VERSION_NEW', '1.0.0')
 
 # requirements
 try:
@@ -18,7 +18,7 @@ with codecs.open("README.md", "r", encoding="UTF-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='tool_json_writer',
+    name='uncover_json_writer',
     version=__version__,
     author=u'Martin Beneš',
     author_email='martinbenes1996@gmail.com',

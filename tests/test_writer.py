@@ -5,7 +5,7 @@ import os
 import tempfile
 import unittest
 
-from tool_json_writer import BinaryDetector, CategoricalDetector, ToolJSONWriter
+from uncover_json_writer import BinaryDetector, CategoricalDetector, ToolJSONWriter
 
 
 class TestWriter(unittest.TestCase):

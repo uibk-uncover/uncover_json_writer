@@ -8,9 +8,8 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import datetime
 import json
+import pkg_resources
 from typing import Any, Dict, List, Union
-
-VERSION = '1.0.0'  # tool version
 
 
 @dataclass
@@ -180,11 +179,13 @@ class ToolJSONWriter:
             configuration (dict): Dictionary of parameter-value pairs. Must be serializable.
             filter (str): Filter.
         """
-        global VERSION
         self.fp = open(path, 'w')
         self.tool = tool
         self.detectors = detectors
-        self.version = VERSION
+        try:
+            self.version = pkg_resources.get_distribution("uncover_json_writer").version
+        except pkg_resources.DistributionNotFound:
+            self.version = None
         self.configuration = configuration
         self.filter = filter
         self.data = {}
@@ -251,6 +252,7 @@ class ToolJSONWriter:
 
     def __del__(self):
         """Writes the result into file."""
+        print("Deleting the object")
         for f in self.data:
             self.data[f]['tools'][self.tool]['detectors'] = {
                 detector_name: detector.get_result()
@@ -258,6 +260,7 @@ class ToolJSONWriter:
                 if detector.decision is not None
             }
         json.dump(self.data, self.fp, indent=2)
+        self.fp.flush()
         self.fp.close()
 
 

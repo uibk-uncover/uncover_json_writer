@@ -7,8 +7,8 @@ sys.path.append(".")
 if __name__ == "__main__":
     import logging
     logging.basicConfig(filename="test.log", level=logging.INFO)
-    import tool_json_writer
-    logging.info(f"{tool_json_writer.__path__=}")
+    import uncover_json_writer
+    logging.info(f"{uncover_json_writer.__path__=}")
 
 # === unit tests ===
 from test_writer import TestWriter  # noqa: F401,E402
