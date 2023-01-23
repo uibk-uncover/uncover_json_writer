@@ -1,2 +1,55 @@
-# tool_json_writer
-JSON Writer for an Uncover tool
+# Tool JSON Writer
+
+This is a Python module for integration of the unified JSON format.
+
+This was proposed as a unified output for all tools from Uncover project.
+
+## Setup
+
+Install the package from Github with following command.
+
+```bash
+pip3 install git+https://github.com/uibk-uncover/tool_json_writer
+```
+
+## Usage
+
+Test that the package was correctly installed with
+
+```python
+python -c 'import tool_json_writer; print(tool_json_writer.__version__)'
+```
+
+
+```python
+from tool_json_writer import BinaryDetector, CategoricalDetector, ToolJSONWriter
+# tool contains following detectors
+tool = 'steganography_detector'
+detectors = [
+    BinaryDetector(name='is_tampered', labels=['original', 'tampered']),
+    CategoricalDetector(name='3valued_detector', labels=['cover', 'stego', 'not_sure'])
+]
+# instantiate writer
+wrt = ToolJSONWriter(path='steganography_detector.json', tool=tool, detectors=detectors)
+# add score from one detector for the first file
+wrt.append('first.jpeg', 'is_tampered', {'original': .8, 'tampered': .2}, 'original')
+# add score from one detector for the second file
+wrt.append('second.jpeg', 'is_tampered', {'original': .3, 'tampered': .7}, 'tampered')
+# another approach (for start and end time actually meaning something) is to announce/prepend file record
+# this is called before processing of the file
+wrt.prepend(file='third.jpeg')
+import time
+
+time.sleep(.5)  # crunching, crunching
+# processing of third file done, writing the results
+wrt.append('third.jpeg', '3valued_detector', {'cover': 0.05, 'stego': 0.8, 'not_sure': .15}, 'stego')
+# writer writes on __del__ call, i.e., when the object is removed
+# this can be done explicitly with
+del wrt
+```
+
+
+
+JSON Writer for an Uncover tool.
+
+
