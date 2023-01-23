@@ -2,7 +2,7 @@
 
 Author: Martin Benes (University of Innsbruck)
 
-This is a Python module for integration of the unified JSON format.
+This is a Python module for adoption of the unified JSON format.
 
 This was proposed as a unified output for all tools from Uncover project.
 
