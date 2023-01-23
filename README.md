@@ -58,4 +58,6 @@ Proper documentation is vaguely planned. No promises though :)
 
 Although I plan to solve bugs affecting the main functionality of the module, if you want to extend the module, you are expected to do it yourself. If you think more people could profit from the extension you wrote, create a pull request.
 
+## Credits
 
+This code repository was developed within [Uncover project](https://www.uncoverproject.eu/), which received funding from the European Union's Horizon 2020 researcha and innovation program under grant agreement No. [101021687](https://cordis.europa.eu/project/id/101021687/).
