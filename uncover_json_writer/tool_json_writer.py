@@ -255,8 +255,8 @@ class ToolJSONWriter:
     def __del__(self):
         """Writes the result into file."""
         for f in self.data:
-            if self.data[file]['tools'][self.tool]['end_timestamp'] is None:
-                self.data[file]['tools'][self.tool]['end_timestamp'] = self.now()
+            if self.data[f]['tools'][self.tool]['end_timestamp'] is None:
+                self.data[f]['tools'][self.tool]['end_timestamp'] = self.now()
             self.data[f]['tools'][self.tool]['detectors'] = {
                 detector_name: detector.get_result()
                 for detector_name, detector in self.data[f]['tools'][self.tool]['detectors'].items()
