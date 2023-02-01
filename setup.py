@@ -4,7 +4,7 @@
 import codecs
 import os
 import setuptools
-__version__ = os.environ.get('VERSION_NEW', '1.0.0')
+__version__ = os.environ.get('VERSION_NEW', '1.0.1')
 
 # requirements
 try:
