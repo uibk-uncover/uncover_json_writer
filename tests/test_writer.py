@@ -31,7 +31,7 @@ class TestWriter(unittest.TestCase):
             CategoricalDetector(name='3valued_detector', labels=['cover', 'stego', 'not_sure'])
         ]
         # instantiate writer
-        wrt = ToolJSONWriter(path=self.tmp.name, tool=tool, detectors=detectors)
+        wrt = ToolJSONWriter(path=self.tmp.name, tool=tool, detectors=detectors, version='2023.03.02')
         # add score from one detector for the first file
         wrt.append('first.jpeg', 'is_tampered', {'original': .8, 'tampered': .2}, 'original')
         # add score from one detector for the second file
@@ -51,6 +51,7 @@ class TestWriter(unittest.TestCase):
         # load and parse result
         with open(self.tmp.name) as fp:
             res = json.load(fp)
+        print(res)
         # check global structure
         self.assertIsInstance(res, dict)
         FILES = ['first.jpeg', 'second.jpeg', 'third.jpeg']

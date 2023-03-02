@@ -173,6 +173,7 @@ class ToolJSONWriter:
         detectors: List[Detector],
         configuration: Dict[str, Any] = {},
         filter: str = None,
+        version: str = None,
     ):
         """Constructor.
 
@@ -187,7 +188,7 @@ class ToolJSONWriter:
         self.fp = open(path, 'w')
         self.tool = tool
         self.detectors = detectors
-        self.version = VERSION
+        self.version = version
         self.configuration = configuration
         self.filter = filter
         self.data = {}
