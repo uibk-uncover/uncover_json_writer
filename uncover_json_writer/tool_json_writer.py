@@ -257,20 +257,22 @@ class ToolJSONWriter:
 
     def __del__(self):
         """Writes the result into file."""
-        try:
-            for f in self.data:
-                if self.data[f]['tools'][self.tool]['end_timestamp'] is None:
-                    self.data[f]['tools'][self.tool]['end_timestamp'] = self.now()
+        for f in self.data:
+            if self.data[f]['tools'][self.tool]['end_timestamp'] is None:
+                self.data[f]['tools'][self.tool]['end_timestamp'] = self.now()
+            try:
                 self.data[f]['tools'][self.tool]['detectors'] = {
                     detector_name: detector.get_result()
                     for detector_name, detector in self.data[f]['tools'][self.tool]['detectors'].items()
                     if detector.decision is not None
                 }
-            json.dump(self.data, self.fp, indent=2)
-        except Exception:
-            raise
-        finally:
-            self.fp.close()
+            except Exception as e:
+                message = str(e).split(':')[-1].strip()
+                self.fail(f, f'error formatting the output: {message}')
+                self.data[f]['tools'][self.tool]['detectors'] = {}
+
+        json.dump(self.data, self.fp, indent=2)
+        self.fp.close()
 
 
 if __name__ == '__main__':

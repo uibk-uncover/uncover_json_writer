@@ -78,11 +78,10 @@ class TestWriter(unittest.TestCase):
         # tool with categorical detector
         tool = 'steganography_detector'
         detectors = [
-            CategoricalDetector(name='cover_stego', labels=['cover', 'stego'], ascending=True)
+            CategoricalDetector(name='cover_stego', labels=['cover', 'stego'])#, ascending=True)
         ]
         # instantiate writer
-        wrt = ToolJSONWriter(path='output.json',#self.tmp.name,
-                             tool=tool, detectors=detectors, version='2023.03.02')
+        wrt = ToolJSONWriter(path=self.tmp.name, tool=tool, detectors=detectors, version='2023.03.02')
         # add score for the first file
         wrt.append('first.jpeg', 'cover_stego', {'cover': .8, 'stego': .2}, 'cover')
         # add score for the second file, missing ;abel
