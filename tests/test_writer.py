@@ -51,7 +51,6 @@ class TestWriter(unittest.TestCase):
         # load and parse result
         with open(self.tmp.name) as fp:
             res = json.load(fp)
-        print(res)
         # check global structure
         self.assertIsInstance(res, dict)
         FILES = ['first.jpeg', 'second.jpeg', 'third.jpeg']
@@ -71,4 +70,28 @@ class TestWriter(unittest.TestCase):
             self.assertIn('start_timestamp', res[f]['tools']['steganography_detector'])
             # TODO
             # self.assert(res[f]['tools']['steganography_detector']['start_timestamp'], None)
-        print(res)
+
+
+    def test_missing_label(self):
+        """Test when label is missing. Only works for ascending True/False."""
+        self.logger.info("test_demo")
+        # tool with categorical detector
+        tool = 'steganography_detector'
+        detectors = [
+            CategoricalDetector(name='cover_stego', labels=['cover', 'stego'], ascending=True)
+        ]
+        # instantiate writer
+        wrt = ToolJSONWriter(path='output.json',#self.tmp.name,
+                             tool=tool, detectors=detectors, version='2023.03.02')
+        # add score for the first file
+        wrt.append('first.jpeg', 'cover_stego', {'cover': .8, 'stego': .2}, 'cover')
+        # add score for the second file, missing ;abel
+        wrt.append('second.jpeg', 'cover_stego', {'cover': .3, 'stego': .2, 'not_sure': .5}, 'not_sure')
+        # call destructor
+        try:
+            raised = False
+            del wrt
+        # check that did not raised
+        except Exception:
+            raised = True
+        self.assertFalse(raised)

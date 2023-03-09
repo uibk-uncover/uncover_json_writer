@@ -41,10 +41,11 @@ class Detector:
         """Abstract method for serialization."""
         raise NotImplementedError
 
-    def label_index(self, label: str = None) -> int:
+    def label_index(self, label: str = None, labels: List[str] = None) -> int:
         """Gives index of label. If label is not given, takes the internal decision."""
         label = self.decision if label is None else label
-        matching = [i for i, v in enumerate(self.labels) if v == label]
+        labels = self.labels if labels is None else labels
+        matching = [i for i, v in enumerate(labels) if v == label]
         return matching[0]
 
 
@@ -119,6 +120,7 @@ class CategoricalDetector(Detector):
         if self.ascending is None:
             scores = [self.scores[k] for k in sorted(self.scores, key=self.label_index)]
             labels = self.labels
+
         # ascending or descending
         elif isinstance(self.ascending, bool):
             # fill missing
@@ -145,7 +147,7 @@ class CategoricalDetector(Detector):
         res = {
             'labels': labels,
             'scores': scores,
-            'decision': self.label_index(self.decision),
+            'decision': self.label_index(self.decision, labels),
             'human_readable_decision': self.decision,
         }
         # only leave ones, if only_flags mode is one
@@ -255,16 +257,20 @@ class ToolJSONWriter:
 
     def __del__(self):
         """Writes the result into file."""
-        for f in self.data:
-            if self.data[f]['tools'][self.tool]['end_timestamp'] is None:
-                self.data[f]['tools'][self.tool]['end_timestamp'] = self.now()
-            self.data[f]['tools'][self.tool]['detectors'] = {
-                detector_name: detector.get_result()
-                for detector_name, detector in self.data[f]['tools'][self.tool]['detectors'].items()
-                if detector.decision is not None
-            }
-        json.dump(self.data, self.fp, indent=2)
-        self.fp.close()
+        try:
+            for f in self.data:
+                if self.data[f]['tools'][self.tool]['end_timestamp'] is None:
+                    self.data[f]['tools'][self.tool]['end_timestamp'] = self.now()
+                self.data[f]['tools'][self.tool]['detectors'] = {
+                    detector_name: detector.get_result()
+                    for detector_name, detector in self.data[f]['tools'][self.tool]['detectors'].items()
+                    if detector.decision is not None
+                }
+            json.dump(self.data, self.fp, indent=2)
+        except Exception:
+            raise
+        finally:
+            self.fp.close()
 
 
 if __name__ == '__main__':
