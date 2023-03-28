@@ -42,10 +42,14 @@ class Detector:
         raise NotImplementedError
 
     def label_index(self, label: str = None, labels: List[str] = None) -> int:
-        """Gives index of label. If label is not given, takes the internal decision."""
+        """Gives index of label. If label is not among the labels, returns -1."""
         label = self.decision if label is None else label
         labels = self.labels if labels is None else labels
         matching = [i for i, v in enumerate(labels) if v == label]
+
+        if len(matching) == 0:
+            return -1
+
         return matching[0]
 
 
